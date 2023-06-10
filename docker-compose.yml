@@ -3,7 +3,7 @@ version: '3.8'
 services:
   pocketbase:
     build: pocketbase
-    container_name: database
+    container_name: ${APPLICATION_NAME}-pocketbase
     volumes:
       - pocketbase-data:/pb
       - ./pocketbase/pb_migrations:/pb/pb_migrations
@@ -14,7 +14,7 @@ services:
 
   next:
     image: node:18
-    container_name: next
+    container_name: ${APPLICATION_NAME}-next
     labels:
       - traefik.enable=true
       - traefik.http.routers.web.rule=Host(`localhost`)
@@ -30,7 +30,7 @@ services:
       frontend:    
 
   ingress:
-    container_name: ingress
+    container_name: ${APPLICATION_NAME}-ingress
     image: traefik:v2.7
     command:
       - --api.dashboard=true
